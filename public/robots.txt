@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kaw393939.github.io/blogtalk/sitemap.xml

@@ -1,9 +1,23 @@
 import { getPostData, getAllPostSlugs } from "@/lib/markdown";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 export async function generateStaticParams() {
   const slugs = getAllPostSlugs();
   return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostData(slug);
+  return {
+    title: post.title,
+    description: post.excerpt || undefined,
+  };
 }
 
 function formatDate(dateStr: string): string {
@@ -28,18 +42,18 @@ export default async function BlogPost({
   return (
     <article>
       <Link
-        href="/blogtalk/blog"
-        className="inline-block text-sm text-[var(--muted)] hover:text-[var(--accent)] mb-8 transition-colors"
+        href="/blog"
+        className="inline-flex items-center min-h-[44px] text-sm text-[var(--muted)] hover:text-[var(--accent)] mb-4 transition-colors"
       >
         &larr; Back
       </Link>
 
-      <header className="mb-10">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight leading-snug mb-3" style={{ letterSpacing: "-0.025em" }}>
+      <header className="mb-8 sm:mb-10">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-snug mb-2" style={{ letterSpacing: "-0.025em" }}>
           {post.title}
         </h1>
         <p className="text-sm text-[var(--muted)]">
-          {formatDate(post.date)} &middot; {minutes} min read
+          <time dateTime={post.date}>{formatDate(post.date)}</time> &middot; {minutes} min read
         </p>
       </header>
 
