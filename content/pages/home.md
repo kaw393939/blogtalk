@@ -1,13 +1,10 @@
 ---
-hero_title: "Twenty-Three Years. Ten Thousand Students."
-hero_subtitle: "I'm Keith Williams — educator, builder, and early AI adopter. I've spent two decades at NJIT helping students from all backgrounds build careers in technology. Now I'm building bridges between AI hype and practical reality."
-hero_tagline: "EverydayAI by Keith Williams"
+hero_title: "Twenty-three years. Ten thousand students."
+hero_subtitle: "I'm Keith Williams — educator, builder, and early AI adopter at NJIT. I write about AI, education, vibe coding, and the future of work."
 ---
 
-My technology journey started early — my father was a mainframe systems lead operator for Alcoa, and I grew up in a data center surrounded by various computers. In 1983, I received a Tandy TRS-80 Color Computer 2 for Christmas and taught myself to program. I've been continuously building systems and evolving with technology ever since: early internet adopter on AOL, first iPhone owner, developer of one of the first MEAN stack frameworks that became Showedme.net, and creator of the iOS collaboration app Wrkbench.
+I grew up in a data center — my father was a mainframe systems lead operator for Alcoa. Got a TRS-80 for Christmas in 1983 and taught myself to program. I've been building things ever since.
 
-I founded the Web Systems program at NJIT in 2002. Over 23 years, I've created 8 regularly offered courses, taught more than 10,000 students across 15 sections annually, and built curricula that Fortune 100 companies recruited from. My students are working at Amazon, Google, JPMorgan, Goldman Sachs, and hundreds of other companies. They're CTOs, senior engineers, data scientists. Many are building their own companies right here in Newark.
+At NJIT since 2002, I created the Web Systems program, built 8 courses, and taught over 10,000 students. My alumni are at Amazon, Google, JPMorgan, Goldman Sachs, and hundreds of other companies. I'm now evolving the program into the Enterprise AI degree.
 
-When ChatGPT launched, I started using it within days — and immediately recognized that everything had changed. I'm now evolving the WIS program into the Enterprise AI degree, driven by my research work using Generative AI to train, augment, and automate software engineering and product development processes.
-
-I write here about AI, education, vibe coding, and the future of work. Less hype, more reality.
+When ChatGPT launched, I started using it within days. Less hype, more reality.

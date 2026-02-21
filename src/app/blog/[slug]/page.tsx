@@ -8,13 +8,12 @@ export async function generateStaticParams() {
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 }
 
-function estimateReadingTime(html: string): number {
+function readingTime(html: string): number {
   const text = html.replace(/<[^>]*>/g, "");
-  const words = text.split(/\s+/).length;
-  return Math.max(1, Math.ceil(words / 230));
+  return Math.max(1, Math.ceil(text.split(/\s+/).length / 230));
 }
 
 export default async function BlogPost({
@@ -24,57 +23,30 @@ export default async function BlogPost({
 }) {
   const { slug } = await params;
   const post = await getPostData(slug);
-  const readTime = estimateReadingTime(post.contentHtml);
+  const minutes = readingTime(post.contentHtml);
 
   return (
-    <article className="animate-fade-in">
-      <div className="mb-6">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-1 text-sm font-medium text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
-        >
-          <span>&larr;</span>
-          <span>Back to essays</span>
-        </Link>
-      </div>
+    <article>
+      <Link
+        href="/blogtalk/blog"
+        className="inline-block text-sm text-[var(--muted)] hover:text-[var(--accent)] mb-8 transition-colors"
+      >
+        &larr; Back
+      </Link>
 
-      <header className="mb-12 pb-10 border-b border-[var(--border)]">
-        <div className="flex items-center gap-3 mb-5 text-sm">
-          <time className="text-[var(--muted)] font-medium">{formatDate(post.date)}</time>
-          <span className="text-[var(--divider)]">&middot;</span>
-          <span className="reading-time">{readTime} min read</span>
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-[1.15] mb-6" style={{ letterSpacing: "-0.03em" }}>
+      <header className="mb-10">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight leading-snug mb-3" style={{ letterSpacing: "-0.025em" }}>
           {post.title}
         </h1>
-        {post.excerpt && (
-          <p className="text-lg text-[var(--muted)] leading-relaxed max-w-2xl" style={{ fontFamily: "'Newsreader', Georgia, serif" }}>
-            {post.excerpt}
-          </p>
-        )}
-        {post.tags && post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-6">
-            {post.tags.map((tag) => (
-              <span key={tag} className="tag">{tag}</span>
-            ))}
-          </div>
-        )}
+        <p className="text-sm text-[var(--muted)]">
+          {formatDate(post.date)} &middot; {minutes} min read
+        </p>
       </header>
 
       <div
         className="prose"
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
       />
-
-      <footer className="mt-16 pt-8 border-t border-[var(--border)]">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[var(--accent)] border border-[var(--accent)] rounded-full hover:bg-[var(--accent)] hover:text-white transition-all"
-        >
-          <span>&larr;</span>
-          Read more essays
-        </Link>
-      </footer>
     </article>
   );
 }

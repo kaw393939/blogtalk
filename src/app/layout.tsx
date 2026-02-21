@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "BlogTalk — Thoughts on Technology, Design & Ideas",
-  description: "A personal blog exploring the intersections of technology, philosophy, and creative thinking.",
+  title: "Keith Williams — AI, Education & Building Things",
+  description: "Writing by Keith Williams on AI, education, vibe coding, and the future of work.",
 };
 
 export default function RootLayout({
@@ -14,33 +14,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased min-h-screen flex flex-col">
-        <header className="sticky top-0 z-50 backdrop-blur-md bg-[var(--background)]/80 border-b border-[var(--border)]">
-          <nav className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="/blogtalk" className="group flex items-center gap-2">
-              <span className="text-lg font-extrabold tracking-tight text-[var(--accent)]">
-                BT
-              </span>
-              <span className="text-lg font-bold tracking-tight group-hover:text-[var(--accent)] transition-colors">
-                BlogTalk
-              </span>
+        <header className="border-b border-[var(--border)]">
+          <nav className="max-w-2xl mx-auto px-6 py-5 flex items-center justify-between">
+            <a href="/blogtalk" className="font-bold text-[var(--text)] hover:text-[var(--accent)] transition-colors">
+              Keith Williams
             </a>
-            <div className="flex items-center gap-8 text-sm font-medium">
-              <a href="/blogtalk" className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-                Home
-              </a>
-              <a href="/blogtalk/blog" className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors">
-                Essays
-              </a>
-            </div>
+            <a href="/blogtalk/blog" className="text-sm text-[var(--muted)] hover:text-[var(--text)] transition-colors">
+              Writing
+            </a>
           </nav>
         </header>
-        <main className="flex-1 max-w-4xl mx-auto px-6 py-16 w-full">
+        <main className="flex-1 max-w-2xl mx-auto px-6 py-12 w-full">
           {children}
         </main>
         <footer className="border-t border-[var(--border)]">
-          <div className="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-[var(--muted)]">
-            <span>&copy; {new Date().getFullYear()} BlogTalk</span>
-            <span className="text-xs">Crafted with Next.js &middot; Deployed on GitHub Pages</span>
+          <div className="max-w-2xl mx-auto px-6 py-6 text-xs text-[var(--muted)]">
+            &copy; {new Date().getFullYear()} Keith Williams
           </div>
         </footer>
       </body>

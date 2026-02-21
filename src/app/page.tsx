@@ -3,125 +3,65 @@ import Link from "next/link";
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
-}
-
-function estimateReadingTime(excerpt: string): string {
-  // Rough estimate based on excerpt length
-  const words = excerpt.split(/\s+/).length;
-  const minutes = Math.max(3, Math.ceil(words * 8));
-  return `${minutes} min read`;
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
 export default async function Home() {
   const { contentHtml, data } = await getPageContent("home");
   const heroTitle = data.hero_title as string | undefined;
   const heroSubtitle = data.hero_subtitle as string | undefined;
-  const heroTagline = data.hero_tagline as string | undefined;
   const recentPosts = getSortedPostsData().slice(0, 6);
 
   return (
     <div>
-      {/* Hero section */}
-      <section className="mb-20 animate-fade-in">
-        <div className="mb-10">
-          {heroTagline && (
-            <span className="inline-block text-xs font-semibold uppercase tracking-widest text-[var(--accent)] mb-4">
-              {heroTagline}
-            </span>
-          )}
-          {heroTitle && (
-            <h1 className="text-5xl sm:text-6xl font-black tracking-tight leading-[1.1] mb-6" style={{ letterSpacing: "-0.04em" }}>
-              {heroTitle}
-            </h1>
-          )}
-          {heroSubtitle && (
-            <p className="text-xl text-[var(--muted)] leading-relaxed max-w-2xl" style={{ fontFamily: "'Newsreader', Georgia, serif" }}>
-              {heroSubtitle}
-            </p>
-          )}
-        </div>
+      {/* About */}
+      <section className="mb-14">
+        {heroTitle && (
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight leading-snug mb-4" style={{ letterSpacing: "-0.025em" }}>
+            {heroTitle}
+          </h1>
+        )}
+        {heroSubtitle && (
+          <p className="text-[var(--muted)] leading-relaxed mb-6 max-w-xl">
+            {heroSubtitle}
+          </p>
+        )}
         <div
-          className="prose"
+          className="prose text-sm text-[var(--muted)] leading-relaxed max-w-xl"
+          style={{ fontSize: "0.9375rem" }}
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
       </section>
 
-      {/* Recent posts */}
+      {/* Recent writing */}
       {recentPosts.length > 0 && (
         <section>
-          <div className="fancy-divider mb-10">
-            <span className="font-semibold text-[var(--foreground)] tracking-tight">Latest Essays</span>
-          </div>
-
-          {/* Featured first post */}
-          {recentPosts[0] && (
-            <article className="post-card border border-[var(--border)] rounded-2xl p-8 mb-8 bg-[var(--card-bg)] animate-fade-in animate-delay-1">
-              <Link href={`/blog/${recentPosts[0].slug}`} className="block">
-                <div className="flex items-center gap-3 mb-3">
-                  <time className="text-sm text-[var(--muted)] font-medium">
-                    {formatDate(recentPosts[0].date)}
-                  </time>
-                  <span className="text-[var(--divider)]">&middot;</span>
-                  <span className="reading-time">{estimateReadingTime(recentPosts[0].excerpt)}</span>
-                </div>
-                <h3 className="text-2xl font-bold tracking-tight mb-3 hover:text-[var(--accent)] transition-colors" style={{ letterSpacing: "-0.02em" }}>
-                  {recentPosts[0].title}
-                </h3>
-                {recentPosts[0].excerpt && (
-                  <p className="text-[var(--muted)] leading-relaxed text-base" style={{ fontFamily: "'Newsreader', Georgia, serif" }}>
-                    {recentPosts[0].excerpt}
-                  </p>
-                )}
-                {recentPosts[0].tags && recentPosts[0].tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {recentPosts[0].tags.map((tag) => (
-                      <span key={tag} className="tag">{tag}</span>
-                    ))}
-                  </div>
-                )}
-              </Link>
-            </article>
-          )}
-
-          {/* Grid for remaining posts */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {recentPosts.slice(1).map((post, i) => (
-              <article
-                key={post.slug}
-                className={`post-card border border-[var(--border)] rounded-2xl p-6 bg-[var(--card-bg)] animate-fade-in animate-delay-${Math.min(i + 2, 4)}`}
-              >
-                <Link href={`/blog/${post.slug}`} className="block h-full">
-                  <time className="text-xs text-[var(--muted)] font-medium">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)] mb-6">
+            Recent writing
+          </h2>
+          <ul className="divide-y divide-[var(--border)]">
+            {recentPosts.map((post) => (
+              <li key={post.slug}>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="group flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 py-4 hover:bg-[var(--hover-bg)] -mx-3 px-3 rounded-md transition-colors"
+                >
+                  <time className="text-sm tabular-nums text-[var(--muted)] shrink-0 w-16">
                     {formatDate(post.date)}
                   </time>
-                  <h3 className="text-lg font-bold tracking-tight mt-2 mb-2 hover:text-[var(--accent)] transition-colors" style={{ letterSpacing: "-0.01em" }}>
+                  <span className="font-medium group-hover:text-[var(--accent)] transition-colors">
                     {post.title}
-                  </h3>
-                  {post.excerpt && (
-                    <p className="text-sm text-[var(--muted)] leading-relaxed line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                  )}
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mt-3">
-                      {post.tags.slice(0, 2).map((tag) => (
-                        <span key={tag} className="tag">{tag}</span>
-                      ))}
-                    </div>
-                  )}
+                  </span>
                 </Link>
-              </article>
+              </li>
             ))}
-          </div>
-
-          <div className="mt-12 text-center">
+          </ul>
+          <div className="mt-8">
             <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-[var(--accent)] border border-[var(--accent)] rounded-full hover:bg-[var(--accent)] hover:text-white transition-all"
+              href="/blogtalk/blog"
+              className="text-sm text-[var(--accent)] hover:underline"
             >
-              View all essays
-              <span>&rarr;</span>
+              All writing &rarr;
             </Link>
           </div>
         </section>
