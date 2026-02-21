@@ -13,17 +13,18 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafaf9" },
-    { media: "(prefers-color-scheme: dark)", color: "#0c0a09" },
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#111" },
   ],
 };
 
 export const metadata: Metadata = {
   title: {
-    default: "Keith Williams — AI, Education & Building Things",
+    default: "Keith Williams",
     template: "%s — Keith Williams",
   },
-  description: "Writing by Keith Williams on AI, education, vibe coding, and the future of work.",
+  description:
+    "Writing on AI, education, and building things.",
   metadataBase: new URL("https://kaw393939.github.io/blogtalk"),
   openGraph: {
     type: "website",
@@ -39,25 +40,37 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="antialiased min-h-screen flex flex-col">
-        <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--accent)] focus:text-white focus:rounded">
+      <body className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--fg)]">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--link)] focus:text-white focus:rounded"
+        >
           Skip to content
         </a>
-        <header role="banner" className="border-b border-[var(--border)]">
-          <nav aria-label="Main" className="max-w-2xl mx-auto px-5 py-4 flex items-center justify-between">
-            <Link href="/" className="font-bold text-[var(--text)] hover:text-[var(--accent)] transition-colors">
+
+        <header className="border-b border-[var(--border)]">
+          <nav aria-label="Main" className="max-w-2xl mx-auto px-6 h-12 flex items-center justify-between">
+            <Link
+              href="/"
+              className="font-semibold tracking-tight text-[var(--fg)] hover:text-[var(--link)] transition-colors"
+            >
               Keith Williams
             </Link>
-            <Link href="/blog" className="text-sm text-[var(--muted)] hover:text-[var(--text)] transition-colors">
+            <Link
+              href="/blog"
+              className="text-sm text-[var(--gray)] hover:text-[var(--fg)] transition-colors"
+            >
               Writing
             </Link>
           </nav>
         </header>
-        <main id="main" role="main" className="flex-1 max-w-2xl mx-auto px-5 py-10 sm:py-12 w-full">
+
+        <main id="main" className="flex-1 max-w-2xl mx-auto px-6 py-12 w-full">
           {children}
         </main>
-        <footer role="contentinfo" className="border-t border-[var(--border)]">
-          <div className="max-w-2xl mx-auto px-5 py-6 text-xs text-[var(--muted)]">
+
+        <footer className="border-t border-[var(--border)]">
+          <div className="max-w-2xl mx-auto px-6 py-6 text-xs text-[var(--light)]">
             &copy; {new Date().getFullYear()} Keith Williams
           </div>
         </footer>

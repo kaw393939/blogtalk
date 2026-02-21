@@ -3,8 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export async function generateStaticParams() {
-  const slugs = getAllPostSlugs();
-  return slugs.map((slug) => ({ slug }));
+  return getAllPostSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -22,7 +21,11 @@ export async function generateMetadata({
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  return d.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 function readingTime(html: string): number {
@@ -43,17 +46,18 @@ export default async function BlogPost({
     <article>
       <Link
         href="/blog"
-        className="inline-flex items-center min-h-[44px] text-sm text-[var(--muted)] hover:text-[var(--accent)] mb-4 transition-colors"
+        className="text-sm text-[var(--gray)] hover:text-[var(--fg)] transition-colors"
       >
         &larr; Back
       </Link>
 
-      <header className="mb-8 sm:mb-10">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-snug mb-2" style={{ letterSpacing: "-0.025em" }}>
+      <header className="mt-8 mb-10">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight leading-snug mb-2">
           {post.title}
         </h1>
-        <p className="text-sm text-[var(--muted)]">
-          <time dateTime={post.date}>{formatDate(post.date)}</time> &middot; {minutes} min read
+        <p className="text-sm text-[var(--light)]">
+          <time dateTime={post.date}>{formatDate(post.date)}</time> &middot;{" "}
+          {minutes} min read
         </p>
       </header>
 
